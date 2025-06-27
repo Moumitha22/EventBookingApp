@@ -10,9 +10,9 @@ namespace EventBookingApi.Mappers
         {
             CreateMap<UserRegisterRequestDto, User>()
                 .ForMember(dest => dest.Password, opt => opt.Ignore())
-                .ForMember(dest => dest.CreatedAt, opt => opt.MapFrom(_ => DateTime.UtcNow))
-                .ForMember(dest => dest.UpdatedAt, opt => opt.MapFrom(_ => DateTime.UtcNow))
-                .ForMember(dest => dest.IsDeleted, opt => opt.MapFrom(_ => false));
+                .ForMember(dest => dest.CreatedAt, opt => opt.Ignore())
+                .ForMember(dest => dest.UpdatedAt, opt => opt.Ignore())
+                .ForMember(dest => dest.IsDeleted, opt => opt.Ignore());
                 
             CreateMap<User, UserLoginResponseDto>()
                 .ForMember(dest => dest.Username, opt => opt.MapFrom(src => src.Email))

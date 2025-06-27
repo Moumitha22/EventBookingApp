@@ -26,11 +26,13 @@ namespace EventBookingApi.Contexts
                 user.HasMany(u => u.Bookings)
                     .WithOne(b => b.User)
                     .HasForeignKey(b => b.UserId)
+                    .OnDelete(DeleteBehavior.Restrict)
                     .HasConstraintName("FK_Booking_User");
 
                 user.HasMany(u => u.RefreshTokens)
                     .WithOne(rt => rt.User)
                     .HasForeignKey(rt => rt.UserId)
+                    .OnDelete(DeleteBehavior.Restrict)
                     .HasConstraintName("FK_RefreshToken_User");
             });
 
@@ -48,6 +50,7 @@ namespace EventBookingApi.Contexts
                 cat.HasMany(c => c.Events)
                     .WithOne(e => e.Category)
                     .HasForeignKey(e => e.CategoryId)
+                    .OnDelete(DeleteBehavior.Restrict)
                     .HasConstraintName("FK_Event_Category");
             });
 
@@ -59,6 +62,7 @@ namespace EventBookingApi.Contexts
                 loc.HasMany(l => l.Events)
                     .WithOne(e => e.Location)
                     .HasForeignKey(e => e.LocationId)
+                    .OnDelete(DeleteBehavior.Restrict)
                     .HasConstraintName("FK_Event_Location");
             });
 
@@ -70,6 +74,7 @@ namespace EventBookingApi.Contexts
                 ev.HasMany(e => e.Bookings)
                     .WithOne(b => b.Event)
                     .HasForeignKey(b => b.EventId)
+                    .OnDelete(DeleteBehavior.Restrict)
                     .HasConstraintName("FK_Booking_Event");
             });
 

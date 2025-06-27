@@ -29,5 +29,11 @@ namespace EventBookingApi.Repositories
                 .SingleOrDefaultAsync(u => u.Email == email && !u.IsDeleted);
         }
 
+        public Task SaveChangesAsync()
+        {
+            return _eventBookingDbContext.SaveChangesAsync();
+        }
+
+
     }
 }

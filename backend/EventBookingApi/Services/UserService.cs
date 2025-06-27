@@ -38,6 +38,7 @@ namespace EventBookingApi.Services
             var user = await _userRepository.Get(id);
             user.IsDeleted = true;
             user.UpdatedAt = DateTime.UtcNow;
+            await _userRepository.SaveChangesAsync(); 
         }
     }
 }

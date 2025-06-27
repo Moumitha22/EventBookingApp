@@ -8,6 +8,7 @@ using EventBookingApi.Mappers;
 using EventBookingApi.Middleware;
 using EventBookingApi.Models;
 using EventBookingApi.Repositories;
+using EventBookingApi.SeedData;
 using EventBookingApi.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
@@ -59,12 +60,18 @@ builder.Services.AddDbContext<EventBookingDbContext>(options =>
 {
     options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection"));
 });
+builder.Services.Configure<AdminUserOptions>(builder.Configuration.GetSection("AdminUser"));
+
 
 // Repositories
 #region Repositories
 builder.Services.AddTransient<IRepository<Guid, User>, UserRepository>();
 builder.Services.AddTransient<IUserRepository, UserRepository>();
 builder.Services.AddTransient<IRefreshTokenRepository, RefreshTokenRepository>();
+builder.Services.AddTransient<ICategoryRepository, CategoryRepository>();
+builder.Services.AddTransient<IEventRepository, EventRepository>();
+builder.Services.AddTransient<ILocationRepository, LocationRepository>();
+builder.Services.AddTransient<ICategoryRepository, CategoryRepository>();
 #endregion
 
 // Services
@@ -74,6 +81,10 @@ builder.Services.AddTransient<IAuthenticationService, AuthenticationService>();
 builder.Services.AddTransient<IEncryptionService, EncryptionService>();
 builder.Services.AddTransient<ITokenService, TokenService>();
 builder.Services.AddTransient<IRefreshTokenService, RefreshTokenService>();
+builder.Services.AddTransient<ICategoryService, CategoryService>();
+builder.Services.AddTransient<ILocationService, LocationService>();
+builder.Services.AddTransient<IEventService, EventService>();
+builder.Services.AddTransient<ITransactionalService, TransactionalService>();
 #endregion
 
 builder.Services.AddAutoMapper(typeof(UserMapper).Assembly);
@@ -170,6 +181,14 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
+
+using (var scope = app.Services.CreateScope())
+{
+    var context = scope.ServiceProvider.GetRequiredService<EventBookingDbContext>();
+    await CategorySeeder.SeedAsync(context);
+    await AdminSeeder.SeedAsync(scope.ServiceProvider);
+}
+
 app.UseMiddleware<ExceptionHandlingMiddleware>();
 app.UseAuthentication();
 app.UseAuthorization();

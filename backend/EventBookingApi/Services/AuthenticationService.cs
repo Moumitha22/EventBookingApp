@@ -39,7 +39,12 @@ namespace EventBookingApi.Services
             var hashedPassword = _encryptionService.HashPassword(registerRequest.Password);
 
             var newUser = _mapper.Map<User>(registerRequest);
+            newUser.Id = Guid.NewGuid();
             newUser.Password = hashedPassword;
+            newUser.CreatedAt = DateTime.UtcNow;
+            newUser.UpdatedAt = DateTime.UtcNow;
+            newUser.IsDeleted = false;
+
 
             await _userService.CreateUserAsync(newUser);
 

@@ -1,4 +1,5 @@
 using EventBookingApi.Interfaces;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace EventBookingApi.Controllers
@@ -20,7 +21,7 @@ namespace EventBookingApi.Controllers
         public async Task<IActionResult> GetUserById(Guid id)
         {
             var user = await _userService.GetUserByIdAsync(id);
-            return Ok(_responseMapper.MapToOkResponse("User retrieved successfully", user));
+            return Ok(_responseMapper.MapToOkResponse("User fetched successfully", user));
         }
 
 
@@ -28,10 +29,11 @@ namespace EventBookingApi.Controllers
         public async Task<IActionResult> GetAllUsers()
         {
             var users = await _userService.GetAllUsersAsync();
-            return Ok(_responseMapper.MapToOkResponse("All users retrieved", users));
+            return Ok(_responseMapper.MapToOkResponse("All users fetched successfully", users));
         }
 
         [HttpDelete("{id}")]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> DeleteUser(Guid id)
         {
             await _userService.DeleteUserAsync(id);
