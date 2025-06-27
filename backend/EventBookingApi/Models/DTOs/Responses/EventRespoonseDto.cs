@@ -6,6 +6,9 @@ public class EventResponseDto
     public DateTime DateTime { get; set; }
     public int TotalSeats { get; set; }
     public int AvailableSeats { get; set; }
+    public decimal Price { get; set; } 
+    public string? ImageUrl { get; set; } 
+    public bool IsFree => Price <= 0; 
     public string CategoryName { get; set; } = string.Empty;
     public string LocationName { get; set; } = string.Empty;
 }

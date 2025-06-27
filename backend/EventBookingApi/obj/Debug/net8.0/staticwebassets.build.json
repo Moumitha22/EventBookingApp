@@ -1,11 +1,39 @@
 {
   "Version": 1,
-  "Hash": "NbPwcGxl1PR72mQk2TBcXfoy71YGXG0MefKnKAr57Jk=",
+  "Hash": "1j7KTaDk52TfwDycugIHRKqCtYxFJIQZ0j4R7ZwoDz0=",
   "Source": "EventBookingApi",
   "BasePath": "_content/EventBookingApi",
   "Mode": "Default",
   "ManifestType": "Build",
   "ReferencedProjectsConfiguration": [],
-  "DiscoveryPatterns": [],
-  "Assets": []
+  "DiscoveryPatterns": [
+    {
+      "Name": "EventBookingApi/wwwroot",
+      "Source": "EventBookingApi",
+      "ContentRoot": "/Users/presidio/Library/CloudStorage/OneDrive-PresidioNetworkSolutions/Documents/Training/Hackacthon Project/EventBookingApp/backend/EventBookingApi/wwwroot/",
+      "BasePath": "_content/EventBookingApi",
+      "Pattern": "**"
+    }
+  ],
+  "Assets": [
+    {
+      "Identity": "/Users/presidio/Library/CloudStorage/OneDrive-PresidioNetworkSolutions/Documents/Training/Hackacthon Project/EventBookingApp/backend/EventBookingApi/wwwroot/images/events/ee12275c-1bc8-40bc-a58e-1d5a6cb88a3f.jpeg",
+      "SourceId": "EventBookingApi",
+      "SourceType": "Discovered",
+      "ContentRoot": "/Users/presidio/Library/CloudStorage/OneDrive-PresidioNetworkSolutions/Documents/Training/Hackacthon Project/EventBookingApp/backend/EventBookingApi/wwwroot/",
+      "BasePath": "_content/EventBookingApi",
+      "RelativePath": "images/events/ee12275c-1bc8-40bc-a58e-1d5a6cb88a3f.jpeg",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "PreferTarget",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot/images/events/ee12275c-1bc8-40bc-a58e-1d5a6cb88a3f.jpeg"
+    }
+  ]
 }

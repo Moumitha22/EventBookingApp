@@ -1,0 +1,25 @@
+{
+  "Files": [
+    {
+      "Id": "/Users/presidio/Library/CloudStorage/OneDrive-PresidioNetworkSolutions/Documents/Training/Hackacthon Project/EventBookingApp/backend/EventBookingApi/wwwroot/images/events/ee12275c-1bc8-40bc-a58e-1d5a6cb88a3f.jpeg",
+      "PackagePath": "staticwebassets/images/events/ee12275c-1bc8-40bc-a58e-1d5a6cb88a3f.jpeg"
+    },
+    {
+      "Id": "obj/Debug/net8.0/staticwebassets/msbuild.EventBookingApi.Microsoft.AspNetCore.StaticWebAssets.props",
+      "PackagePath": "build\\Microsoft.AspNetCore.StaticWebAssets.props"
+    },
+    {
+      "Id": "obj/Debug/net8.0/staticwebassets/msbuild.build.EventBookingApi.props",
+      "PackagePath": "build\\EventBookingApi.props"
+    },
+    {
+      "Id": "obj/Debug/net8.0/staticwebassets/msbuild.buildMultiTargeting.EventBookingApi.props",
+      "PackagePath": "buildMultiTargeting\\EventBookingApi.props"
+    },
+    {
+      "Id": "obj/Debug/net8.0/staticwebassets/msbuild.buildTransitive.EventBookingApi.props",
+      "PackagePath": "buildTransitive\\EventBookingApi.props"
+    }
+  ],
+  "ElementsToRemove": []
+}

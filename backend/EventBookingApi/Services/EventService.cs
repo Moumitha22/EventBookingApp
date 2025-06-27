@@ -11,17 +11,20 @@ namespace EventBookingApi.Services
         private readonly IEventRepository _eventRepository;
         private readonly ILocationService _locationService;
         private readonly IMapper _mapper;
+        private readonly IWebHostEnvironment _env;
 
         public EventService(
             ITransactionalService transactionalService,
             IEventRepository eventRepository,
             ILocationService locationService,
-            IMapper mapper)
+            IMapper mapper,
+            IWebHostEnvironment env)
         {
             _transactionalService = transactionalService;
             _eventRepository = eventRepository;
             _locationService = locationService;
             _mapper = mapper;
+            _env = env;
         }
 
         public async Task<EventResponseDto> AddEventAsync(EventCreateRequestDto dto)
@@ -66,5 +69,28 @@ namespace EventBookingApi.Services
             var events = await _eventRepository.GetByCategoryIdAsync(categoryId);
             return events.Select(_mapper.Map<EventResponseDto>);
         }
+
+        public async Task UploadEventImageAsync(EventImageUploadDto dto)
+        {
+            var eventEntity = await _eventRepository.Get(dto.EventId);
+
+            var uploadsPath = Path.Combine(_env.WebRootPath, "images", "events");
+            if (!Directory.Exists(uploadsPath))
+                Directory.CreateDirectory(uploadsPath);
+
+            var fileName = $"{Guid.NewGuid()}{Path.GetExtension(dto.File.FileName)}";
+            var filePath = Path.Combine(uploadsPath, fileName);
+
+            using (var stream = new FileStream(filePath, FileMode.Create))
+            {
+                await dto.File.CopyToAsync(stream);
+            }
+
+            eventEntity.ImageUrl = $"/images/events/{fileName}";
+            eventEntity.UpdatedAt = DateTime.UtcNow;
+
+            await _eventRepository.Update(eventEntity.Id, eventEntity);
+        }
+
     }
 }

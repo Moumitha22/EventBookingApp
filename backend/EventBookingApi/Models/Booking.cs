@@ -7,6 +7,8 @@ namespace EventBookingApi.Models
         public Guid UserId { get; set; }
 
         public Guid EventId { get; set; }
+        
+        public int SeatCount { get; set; } 
 
         public DateTime BookedAt { get; set; }
 

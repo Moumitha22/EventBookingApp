@@ -14,6 +14,10 @@ namespace EventBookingApi.Models
 
         public int AvailableSeats { get; set; }
 
+        public decimal Price { get; set; } = 0; 
+
+        public string? ImageUrl { get; set; }
+
         public Guid CategoryId { get; set; }
 
         public Guid LocationId { get; set; }

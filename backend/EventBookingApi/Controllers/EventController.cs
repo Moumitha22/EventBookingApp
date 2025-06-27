@@ -33,7 +33,6 @@ namespace EventBookingApi.Controllers
             return Ok(_responseMapper.MapToOkResponse("Event fetched successfully", ev));
         }
 
-        // GET: api/Event
         [HttpGet]
         public async Task<IActionResult> GetAllEvents()
         {
@@ -41,7 +40,6 @@ namespace EventBookingApi.Controllers
             return Ok(_responseMapper.MapToOkResponse("All events fetched successfully", events));
         }
 
-        // GET: api/Event/upcoming
         [HttpGet("upcoming")]
         public async Task<IActionResult> GetUpcomingEvents()
         {
@@ -49,12 +47,20 @@ namespace EventBookingApi.Controllers
             return Ok(_responseMapper.MapToOkResponse("Upcoming events fetched successfully", events));
         }
 
-        // GET: api/Event/category/{categoryId}
         [HttpGet("category/{categoryId}")]
         public async Task<IActionResult> GetEventsByCategory(Guid categoryId)
         {
             var events = await _eventService.GetEventsByCategoryAsync(categoryId);
             return Ok(_responseMapper.MapToOkResponse("Events by category fetched successfully", events));
         }
+
+        [HttpPost("upload-image")]
+        [Consumes("multipart/form-data")]
+        public async Task<IActionResult> UploadEventImage([FromForm] EventImageUploadDto dto)
+        {
+            await _eventService.UploadEventImageAsync(dto);
+             return Ok(_responseMapper.MapToOkResponse("Image uploaded successfully"));
+        }
+
     }
 }

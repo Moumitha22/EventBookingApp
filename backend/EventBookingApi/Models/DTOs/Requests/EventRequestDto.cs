@@ -6,6 +6,7 @@ namespace EventBookingApi.Models.DTOs
         public string Description { get; set; } = string.Empty;
         public DateTime DateTime { get; set; }
         public int TotalSeats { get; set; }
+        public decimal Price { get; set; } = 0; 
         public Guid CategoryId { get; set; }
         public LocationCreateRequestDto Location { get; set; } = new();
     }
