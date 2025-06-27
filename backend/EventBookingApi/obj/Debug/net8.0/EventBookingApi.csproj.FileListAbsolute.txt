@@ -113,3 +113,5 @@
 /Users/presidio/Library/CloudStorage/OneDrive-PresidioNetworkSolutions/Documents/Training/Hackacthon Project/EventBookingApp/backend/EventBookingApi/obj/Debug/net8.0/EventBookingApi.pdb
 /Users/presidio/Library/CloudStorage/OneDrive-PresidioNetworkSolutions/Documents/Training/Hackacthon Project/EventBookingApp/backend/EventBookingApi/obj/Debug/net8.0/EventBookingApi.genruntimeconfig.cache
 /Users/presidio/Library/CloudStorage/OneDrive-PresidioNetworkSolutions/Documents/Training/Hackacthon Project/EventBookingApp/backend/EventBookingApi/obj/Debug/net8.0/ref/EventBookingApi.dll
+/Users/presidio/Library/CloudStorage/OneDrive-PresidioNetworkSolutions/Documents/Training/Hackacthon Project/EventBookingApp/backend/EventBookingApi/bin/Debug/net8.0/AutoMapper.dll
+/Users/presidio/Library/CloudStorage/OneDrive-PresidioNetworkSolutions/Documents/Training/Hackacthon Project/EventBookingApp/backend/EventBookingApi/bin/Debug/net8.0/AutoMapper.Extensions.Microsoft.DependencyInjection.dll
