@@ -6,6 +6,7 @@ namespace EventBookingApi.Interfaces
     {
         Task<IEnumerable<Event>> GetUpcomingEventsAsync();
         Task<IEnumerable<Event>> GetByCategoryIdAsync(Guid categoryId);
+        public Task SaveChangesAsync();
     }
     
 }

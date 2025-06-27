@@ -3,6 +3,7 @@ using EventBookingApi.Contexts;
 using EventBookingApi.Models;
 using EventBookingApi.Interfaces;
 using EventBookingApi.Exceptions;
+using EventBookingApi.Models.DTOs;
 
 namespace EventBookingApi.Repositories
 {
@@ -47,6 +48,12 @@ namespace EventBookingApi.Repositories
                 .Include(e => e.Location)
                 .ToListAsync();
         }
+
+        public Task SaveChangesAsync()
+        {
+            return _eventBookingDbContext.SaveChangesAsync();
+        }
+
     }
 
     

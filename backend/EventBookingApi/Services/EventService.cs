@@ -92,5 +92,34 @@ namespace EventBookingApi.Services
             await _eventRepository.Update(eventEntity.Id, eventEntity);
         }
 
+        public async Task<EventResponseDto> UpdateEventAsync(Guid eventId, EventUpdateRequestDto dto)
+        {
+            var ev = await _eventRepository.Get(eventId);
+
+            ev.Name = dto.Name;
+            ev.Description = dto.Description;
+            ev.DateTime = dto.DateTime;
+            ev.TotalSeats = dto.TotalSeats;
+            ev.Price = dto.Price;
+            ev.UpdatedAt = DateTime.UtcNow;
+
+            if (dto.TotalSeats > ev.TotalSeats)
+            {
+                ev.AvailableSeats += dto.TotalSeats - ev.TotalSeats;
+            }
+
+            var updated = await _eventRepository.Update(ev.Id, ev);
+            return _mapper.Map<EventResponseDto>(updated);
+        }
+
+
+        public async Task DeletEventAsync(Guid id)
+        {
+            var ev = await _eventRepository.Get(id);
+            ev.IsDeleted = true;
+            ev.UpdatedAt = DateTime.UtcNow;
+            await _eventRepository.SaveChangesAsync();
+        }
+
     }
 }

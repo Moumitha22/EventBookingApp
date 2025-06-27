@@ -10,5 +10,8 @@ namespace EventBookingApi.Interfaces
         Task<IEnumerable<EventResponseDto>> GetAllEventsAsync();
         Task<IEnumerable<EventResponseDto>> GetUpcomingEventsAsync();
         Task<IEnumerable<EventResponseDto>> GetEventsByCategoryAsync(Guid categoryId);
+        Task DeletEventAsync(Guid id);
+        Task<EventResponseDto> UpdateEventAsync(Guid eventId, EventUpdateRequestDto dto);
+
     }
 }

@@ -9,5 +9,6 @@ namespace EventBookingApi.Interfaces
         Task<IEnumerable<BookingResponseDto>> GetBookingsByEventIdAsync(Guid eventId);
         Task<BookingResponseDto> GetBookingByIdAsync(Guid id);
         Task<IEnumerable<BookingResponseDto>> GetAllBookingsAsync();
+        Task<IEnumerable<EventBookingSummaryDto>> GetAllEventBookingSummariesAsync();
     }
 }

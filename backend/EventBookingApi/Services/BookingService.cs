@@ -58,5 +58,12 @@ namespace EventBookingApi.Services
                 BookedAt = b.BookedAt
             });
         }
+
+
+        public async Task<IEnumerable<EventBookingSummaryDto>> GetAllEventBookingSummariesAsync()
+        {
+            return await _bookingRepository.GetEventBookingSummariesAsync();
+        }
+
     }
 }

@@ -1,0 +1,57 @@
+CREATE OR REPLACE FUNCTION book_event_return_id(
+    event_id UUID,
+    user_id UUID,
+    seat_count INT
+)
+RETURNS TABLE (BookingId UUID)
+LANGUAGE plpgsql
+AS $$
+DECLARE
+    available INT;
+    new_booking_id UUID := gen_random_uuid();
+BEGIN
+    -- Check for existing booking
+    IF EXISTS (
+        SELECT 1 FROM "Bookings"
+        WHERE "UserId" = user_id AND "EventId" = event_id AND NOT "IsDeleted"
+    ) THEN
+        RAISE EXCEPTION 'User has already booked this event';
+    END IF;
+
+    -- Lock the event row
+    SELECT "AvailableSeats"
+    INTO available
+    FROM "Events"
+    WHERE "Id" = event_id
+    FOR UPDATE;
+
+    IF NOT FOUND THEN
+        RAISE EXCEPTION 'Event not found';
+    END IF;
+
+    IF available < seat_count THEN
+        RETURN;
+    END IF;
+
+    INSERT INTO "Bookings" (
+        "Id", "UserId", "EventId", "SeatCount", "BookedAt", "UpdatedAt", "IsDeleted"
+    ) VALUES (
+        new_booking_id, user_id, event_id, seat_count, NOW(), NOW(), FALSE
+    );
+
+    UPDATE "Events"
+    SET "AvailableSeats" = "AvailableSeats" - seat_count,
+        "UpdatedAt" = NOW()
+    WHERE "Id" = event_id;
+
+    RETURN QUERY SELECT new_booking_id AS bookingid;
+END;
+$$;
+
+
+
+SELECT * FROM book_event_return_id(
+  'e27a8d13-142a-44dc-b5f3-9fb1d348c2d7',
+  '70efc4b3-5b15-4cfa-bff6-6eb5a2e546f6',
+  2
+);

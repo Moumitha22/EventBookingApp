@@ -59,7 +59,24 @@ namespace EventBookingApi.Controllers
         public async Task<IActionResult> UploadEventImage([FromForm] EventImageUploadDto dto)
         {
             await _eventService.UploadEventImageAsync(dto);
-             return Ok(_responseMapper.MapToOkResponse("Image uploaded successfully"));
+            return Ok(_responseMapper.MapToOkResponse("Image uploaded successfully"));
+        }
+
+        [Authorize(Roles = "Admin")]
+        [HttpPut("{id}")]
+        public async Task<IActionResult> UpdateEvent(Guid id, [FromBody] EventUpdateRequestDto dto)
+        {
+            var updated = await _eventService.UpdateEventAsync(id, dto);
+            return Ok(_responseMapper.MapToOkResponse("Events updated successfully", updated));
+        }
+
+        
+        [HttpDelete("{id}")]
+        // [Authorize(Roles = "Admin")]
+        public async Task<IActionResult> DeleteEvent(Guid id)
+        {
+            await _eventService.DeletEventAsync(id);
+            return Ok(_responseMapper.MapToOkResponse("Event deleted successfully"));
         }
 
     }

@@ -107,5 +107,22 @@ namespace EventBookingApi.Repositories
                 .Where(b => !b.IsDeleted)
                 .ToListAsync();
         }
+
+        public async Task<IEnumerable<EventBookingSummaryDto>> GetEventBookingSummariesAsync()
+        {
+            return await _eventBookingDbContext.Events
+                .Include(e => e.Bookings)
+                .Select(e => new EventBookingSummaryDto
+                {
+                    EventId = e.Id,
+                    EventName = e.Name,
+                    EventDate = e.DateTime,
+                    TotalBookings = e.Bookings.Count(b => !b.IsDeleted),
+                    TotalSeatsBooked = e.Bookings
+                                        .Where(b => !b.IsDeleted)
+                                        .Sum(b => b.SeatCount)
+                })
+                .ToListAsync();
+        }
     }
 }
