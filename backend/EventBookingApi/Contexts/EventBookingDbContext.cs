@@ -1,5 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using EventBookingApi.Models;
+using EventBookingApi.Models.DTOs;
 
 namespace EventBookingApi.Contexts
 {
@@ -87,6 +88,8 @@ namespace EventBookingApi.Contexts
                     .IsUnique()
                     .HasDatabaseName("UX_User_Event_Booking");
             });
+
+            modelBuilder.Entity<BookingIdResult>().HasNoKey();
         }
     }
 }

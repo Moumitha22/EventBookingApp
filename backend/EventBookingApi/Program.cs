@@ -72,6 +72,7 @@ builder.Services.AddTransient<ICategoryRepository, CategoryRepository>();
 builder.Services.AddTransient<IEventRepository, EventRepository>();
 builder.Services.AddTransient<ILocationRepository, LocationRepository>();
 builder.Services.AddTransient<ICategoryRepository, CategoryRepository>();
+builder.Services.AddTransient<IBookingRepository, BookingRepository>();
 #endregion
 
 // Services
@@ -85,6 +86,7 @@ builder.Services.AddTransient<ICategoryService, CategoryService>();
 builder.Services.AddTransient<ILocationService, LocationService>();
 builder.Services.AddTransient<IEventService, EventService>();
 builder.Services.AddTransient<ITransactionalService, TransactionalService>();
+builder.Services.AddTransient<IBookingService, BookingService>();
 #endregion
 
 builder.Services.AddAutoMapper(typeof(UserMapper).Assembly);
