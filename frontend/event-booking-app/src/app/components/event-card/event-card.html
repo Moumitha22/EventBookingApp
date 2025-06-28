@@ -1,28 +1,3 @@
-<!-- <div class="card h-100">
-  <img
-    *ngIf="event.imageUrl"
-    [src]="imageBaseUrl + event.imageUrl"
-    class="card-img-top"
-    alt="{{ event.name }}"
-  />
-  <div class="card-body">
-    <h5 class="card-title">{{ event.name }}</h5>
-    <p class="card-text text-muted">{{ event.dateTime | date: 'medium' }}</p>
-    <p class="card-text">
-      <strong>Location:</strong> {{ event.locationName }}<br />
-      <strong>Category:</strong> {{ event.categoryName }}<br />
-      <strong>Price:</strong>
-      <span *ngIf="event.isFree" class="text-success">Free</span>
-      <span *ngIf="!event.isFree">&#8377;{{ event.price }}</span>
-    </p>
-  </div>
-  <div class="card-footer text-center">
-    <button class="btn btn-primary">
-      View Details
-    </button>
-  </div>
-</div> -->
-
 <div class="card h-100 shadow border-0 event-card">
   <img
     *ngIf="event.imageUrl"
@@ -63,14 +38,30 @@
       </span>
     </p>
 
-    <div class="mt-auto text-center">
+    <div class="mt-auto d-flex justify-content-center gap-5">
+      <!-- Admin Buttons -->
+      <ng-container *ngIf="role === 'Admin'">
+        <a class="btn btn-outline-primary" [routerLink]="['/edit-event', event.id]">
+          <i class="bi bi-pencil-fill me-1"></i> View / Edit
+        </a>
+
+        <button class="btn btn-danger" (click)="deleteEvent()">
+          <i class="bi bi-trash-fill me-1"></i> Delete
+        </button>
+      </ng-container>
+
+      <!-- User Book Button -->
       <button
+        *ngIf="role === 'User' || role === null"
         class="btn btn-primary w-100"
+        [routerLink]="['/book-event', event.id]"
         [disabled]="event.availableSeats === 0"
       >
-        <i class="bi bi-ticket-fill me-1"></i>
-        Book Tickets
+        <i class="bi bi-ticket-fill me-1"></i> Book Tickets
       </button>
     </div>
+
+
+
   </div>
 </div>

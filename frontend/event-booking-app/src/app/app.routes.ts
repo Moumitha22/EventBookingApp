@@ -6,6 +6,8 @@ import { EventsComponent } from './pages/events/events';
 import { PostEventComponent } from './pages/post-event/post-event';
 import { MyBookingsComponent } from './pages/my-bookings/my-bookings';
 import { BookingsSummary } from './pages/bookings-summary/bookings-summary';
+import { EditEventComponent } from './pages/edit-event/edit-event';
+import { BookEventComponent } from './pages/book-event/book-event';
 
 export const routes: Routes = [
   { path: '', component: Landing, pathMatch: 'full' },  
@@ -16,4 +18,10 @@ export const routes: Routes = [
   { path: 'my-events', component: MyBookingsComponent },
   { path: 'bookings-summary', component: BookingsSummary },
   { path: 'post-event', component: PostEventComponent},
+  { path: 'book-event/:id', component: BookEventComponent},
+  {
+    path: 'edit-event/:id',
+    component: EditEventComponent
+  }
+
 ];

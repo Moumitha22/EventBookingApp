@@ -22,7 +22,7 @@ namespace EventBookingApi.Mappers
 
             CreateMap<Event, EventResponseDto>()
                 .ForMember(dest => dest.CategoryName, opt => opt.MapFrom(src => src.Category.Name))
-                .ForMember(dest => dest.LocationName, opt => opt.MapFrom(src => $"{src.Location.Name}, {src.Location.City}, {src.Location.State}"));
+                .ForMember(dest => dest.LocationName, opt => opt.MapFrom(src => $"{src.Location.Name}, {src.Location.Locality}, {src.Location.City}, {src.Location.State}"));
         }
     }
 }

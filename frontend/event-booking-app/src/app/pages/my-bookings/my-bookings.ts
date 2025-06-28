@@ -12,7 +12,7 @@ import { AuthService } from '../../core/services/auth.service';
   styleUrls: ['./my-bookings.css']
 })
 export class MyBookingsComponent implements OnInit {
-  bookings: BookingResponse[] = []; // initialized to avoid undefined errors
+  bookings: BookingResponse[] = [];
   loading = true;
 
   constructor(

@@ -142,23 +142,36 @@ namespace EventBookingApi.Services
 
         public async Task<EventResponseDto> UpdateEventAsync(Guid eventId, EventUpdateRequestDto dto)
         {
-            var ev = await _eventRepository.Get(eventId);
-
-            ev.Name = dto.Name;
-            ev.Description = dto.Description;
-            ev.DateTime = DateTime.SpecifyKind(dto.DateTime, DateTimeKind.Utc);
-            ev.TotalSeats = dto.TotalSeats;
-            ev.Price = dto.Price;
-            ev.UpdatedAt = DateTime.UtcNow;
-
-            if (dto.TotalSeats > ev.TotalSeats)
+            return await _transactionalService.ExecuteInTransactionAsync(async () =>
             {
-                ev.AvailableSeats += dto.TotalSeats - ev.TotalSeats;
-            }
+                var ev = await _eventRepository.Get(eventId);
 
-            var updated = await _eventRepository.Update(ev.Id, ev);
-            return _mapper.Map<EventResponseDto>(updated);
+                int bookedSeats = ev.TotalSeats - ev.AvailableSeats;
+
+                ev.Name = dto.Name;
+                ev.Description = dto.Description;
+                ev.DateTime = DateTime.SpecifyKind(dto.DateTime, DateTimeKind.Utc);
+                ev.TotalSeats = dto.TotalSeats;
+                ev.Price = dto.Price;
+                ev.UpdatedAt = DateTime.UtcNow;
+
+                ev.AvailableSeats = ev.TotalSeats - bookedSeats;
+                ev.AvailableSeats = Math.Max(0, Math.Min(ev.AvailableSeats, ev.TotalSeats));
+
+
+                if (dto.Location != null)
+                {
+                    var location = await _locationService.AddIfNotExistsAsync(dto.Location);
+                    ev.LocationId = location.Id;
+                }
+
+                var updated = await _eventRepository.Update(ev.Id, ev);
+
+
+                return _mapper.Map<EventResponseDto>(updated);
+            });
         }
+
 
 
         public async Task DeletEventAsync(Guid id)
@@ -168,6 +181,38 @@ namespace EventBookingApi.Services
             ev.UpdatedAt = DateTime.UtcNow;
             await _eventRepository.SaveChangesAsync();
         }
+        
+        public async Task UpdateEventImageAsync(EventImageUploadDto dto)
+        {
+            var ev = await _eventRepository.Get(dto.EventId);
+
+            var wwwRootPath = _env.WebRootPath;
+
+            // Delete old image
+            if (!string.IsNullOrWhiteSpace(ev.ImageUrl))
+            {
+                var oldPath = Path.Combine(wwwRootPath, ev.ImageUrl.TrimStart('/').Replace("/", Path.DirectorySeparatorChar.ToString()));
+                if (System.IO.File.Exists(oldPath))
+                    System.IO.File.Delete(oldPath);
+            }
+
+            // Upload new image
+            var fileName = $"{Guid.NewGuid()}{Path.GetExtension(dto.File.FileName)}";
+            var relativePath = Path.Combine("uploads", "events", fileName);
+            var fullPath = Path.Combine(wwwRootPath, relativePath);
+
+            Directory.CreateDirectory(Path.GetDirectoryName(fullPath)!);
+            using (var stream = new FileStream(fullPath, FileMode.Create))
+            {
+                await dto.File.CopyToAsync(stream);
+            }
+
+            ev.ImageUrl = "/" + relativePath.Replace("\\", "/");
+            ev.UpdatedAt = DateTime.UtcNow;
+
+            await _eventRepository.Update(dto.EventId, ev);
+        }
+
 
     }
 }

@@ -7,5 +7,6 @@ namespace EventBookingApi.Models.DTOs
         public DateTime DateTime { get; set; }
         public int TotalSeats { get; set; }
         public decimal Price { get; set; }
+        public LocationCreateRequestDto Location { get; set; } = new();
     }
 }

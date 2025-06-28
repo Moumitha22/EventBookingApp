@@ -1,0 +1,54 @@
+<div class="container py-5 d-flex justify-content-center">
+  <div class="card p-4 shadow border-0 w-100" style="max-width: 600px;" *ngIf="event">
+    <h3 class="mb-4 text-center fw-bold">Book Tickets</h3>
+
+    <h4 class="fw-semibold mb-4" style="color: #5e23dc;">{{ event.name }}</h4>
+    <p class="text-muted mb-1">
+      <i class="bi bi-calendar-event me-2"></i>
+      {{ event.dateTime | date: 'medium' }}
+    </p>
+    <p class="text-muted mb-3">
+      <i class="bi bi-geo-alt-fill me-2"></i>
+      {{ event.locationName }}
+    </p>
+
+    <p>
+      <strong>Available Seats:</strong>
+      <span [ngClass]="{ 'text-danger': event.availableSeats === 0, 'text-success': event.availableSeats > 0 }">
+        {{ event.availableSeats }}
+      </span>
+    </p>
+
+    <form [formGroup]="bookingForm" (ngSubmit)="onSubmit()">
+      <div class="mb-3">
+        <label for="seats" class="form-label">Number of Tickets</label>
+        <input
+          type="number"
+          class="form-control"
+          id="seats"
+          formControlName="seatCount"
+          [max]="event.availableSeats"
+          min="1"
+        />
+        <div class="text-danger mt-1" *ngIf="bookingForm.get('seatCount')?.hasError('max')">
+          Cannot book more than available seats!
+        </div>
+        <div class="text-danger mt-1" *ngIf="bookingForm.get('seatCount')?.hasError('min')">
+          Please enter at least 1 ticket.
+        </div>
+      </div>
+
+      <button class="btn btn-primary w-100" type="submit" [disabled]="bookingForm.invalid || isSubmitting">
+        {{ isSubmitting ? 'Booking...' : 'Book Now' }}
+      </button>
+    </form>
+
+    <div *ngIf="successMessage" class="alert alert-success mt-3 text-center">
+      {{ successMessage }}
+    </div>
+
+    <div *ngIf="errorMessage" class="alert alert-danger mt-3 text-center">
+      {{ errorMessage }}
+    </div>
+  </div>
+</div>

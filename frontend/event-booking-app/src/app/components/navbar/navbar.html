@@ -28,9 +28,14 @@
 
         <!-- Role-specific nav links -->
         <ng-container *ngIf="userRole$ | async as role">
+          <ng-container *ngIf="role === 'User'">
+            <li class="nav-item me-lg-4 mb-3 mb-lg-0">
+              <a class="nav-link text-white" routerLink="my-events">My Bookings</a>
+            </li>
+          </ng-container>
           <ng-container *ngIf="role === 'Admin'">
             <li class="nav-item me-lg-4 mb-3 mb-lg-0">
-              <a class="nav-link text-white" routerLink="post-event">Post Events</a>
+              <a class="nav-link text-white" routerLink="/post-event">Post Events</a>
             </li>
           </ng-container>
           <ng-container *ngIf="role === 'Admin'">

@@ -6,7 +6,7 @@ using System.Security.Claims;
 namespace EventBookingApi.Controllers
 {
     [ApiController]
-    [Route("api/v1/[controller]")]
+    [Route("api/[controller]")]
     public class BookingController : ControllerBase
     {
         private readonly IBookingService _bookingService;

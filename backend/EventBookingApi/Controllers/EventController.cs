@@ -87,7 +87,7 @@ namespace EventBookingApi.Controllers
             return Ok(_responseMapper.MapToOkResponse("Events updated successfully", updated));
         }
 
-        
+
         [HttpDelete("{id}")]
         // [Authorize(Roles = "Admin")]
         public async Task<IActionResult> DeleteEvent(Guid id)
@@ -95,6 +95,16 @@ namespace EventBookingApi.Controllers
             await _eventService.DeletEventAsync(id);
             return Ok(_responseMapper.MapToOkResponse("Event deleted successfully"));
         }
+        
+        [HttpPut("image")]
+        // [Authorize(Roles = "Admin")]
+        [Consumes("multipart/form-data")]
+        public async Task<IActionResult> UpdateEventImage([FromForm] EventImageUploadDto dto)
+        {
+            await _eventService.UpdateEventImageAsync(dto);
+            return Ok(new { message = "Event image updated successfully" });
+        }
+
 
     }
 }
