@@ -1,5 +1,6 @@
 using EventBookingApi.Interfaces;
 using EventBookingApi.Models.DTOs;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 [ApiController]
@@ -44,30 +45,29 @@ public class AuthenticationController : ControllerBase
     {
         var loginResponse = await _authService.LoginAsync(loginRequest);
         Response.Cookies.Append("refreshToken", loginResponse.RefreshToken, GetRefreshTokenCookieOptions());
-        // loginResponse.RefreshToken = null;
+        loginResponse.RefreshToken = null;
         var response = _responseMapper.MapToOkResponse("Login successful", loginResponse);
         return Ok(response);
     }
 
-    [HttpPost("refresh-token/{refreshToken}")]
-    public async Task<IActionResult> RefreshToken(string refreshToken)
+    [HttpPost("refresh-token")]
+    public async Task<IActionResult> RefreshToken()
     {
-        var token = Request.Cookies["refreshToken"] ?? refreshToken;
+        var token = Request.Cookies["refreshToken"];
         if (string.IsNullOrWhiteSpace(token))
             return BadRequest(_responseMapper.MapToErrorResponse<object>(400, "Missing refresh token"));
 
         var tokens = await _authService.RefreshTokenAsync(token);
         Response.Cookies.Append("refreshToken", tokens.RefreshToken, GetRefreshTokenCookieOptions());
-        // tokens.RefreshToken = null;
+        tokens.RefreshToken = null;
         var response = _responseMapper.MapToOkResponse("Token refreshed successfully", tokens);
         return Ok(response);
     }
 
-    [HttpPost("logout/{refreshToken}")]
-    // [Authorize]
-    public async Task<IActionResult> Logout(string token)
+    [HttpPost("logout")]
+    public async Task<IActionResult> Logout()
     {
-        var refreshToken = Request.Cookies["refreshToken"]?? token;
+        var refreshToken = Request.Cookies["refreshToken"];
         if (!string.IsNullOrWhiteSpace(refreshToken))
         {
             await _authService.LogoutAsync(refreshToken);

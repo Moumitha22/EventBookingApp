@@ -1,3 +1,4 @@
+using System.Text.Json;
 using EventBookingApi.Interfaces;
 using EventBookingApi.Models.DTOs;
 using Microsoft.AspNetCore.Authorization;
@@ -18,13 +19,29 @@ namespace EventBookingApi.Controllers
             _responseMapper = responseMapper;
         }
 
-        [HttpPost]
+        // [HttpPost]
+        // // [Authorize(Roles = "Admin")]
+        // public async Task<IActionResult> AddEvent([FromBody] EventCreateRequestDto dto)
+        // {
+        //     var createdEvent = await _eventService.AddEventAsync(dto);
+        //     return Ok(_responseMapper.MapToOkResponse("Event created successfully", createdEvent));
+        // }
+
+        [HttpPost("upload")]
+        [Consumes("multipart/form-data")]
         // [Authorize(Roles = "Admin")]
-        public async Task<IActionResult> AddEvent([FromBody] EventCreateRequestDto dto)
+        public async Task<IActionResult> UploadEventWithImage([FromForm] EventWithImageUploadDto dto)
         {
-            var createdEvent = await _eventService.AddEventAsync(dto);
-            return Ok(_responseMapper.MapToOkResponse("Event created successfully", createdEvent));
+            var eventDto = JsonSerializer.Deserialize<EventCreateRequestDto>(dto.EventJson,
+                new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
+
+            if (eventDto == null) return BadRequest("Invalid event data");
+
+            var result = await _eventService.AddEventWithImageAsync(eventDto, dto.Image);
+
+            return Ok(_responseMapper.MapToOkResponse("Event created successfully", result));
         }
+
 
         [HttpGet("{id}")]
         public async Task<IActionResult> GetEventById(Guid id)
@@ -54,13 +71,13 @@ namespace EventBookingApi.Controllers
             return Ok(_responseMapper.MapToOkResponse("Events by category fetched successfully", events));
         }
 
-        [HttpPost("upload-image")]
-        [Consumes("multipart/form-data")]
-        public async Task<IActionResult> UploadEventImage([FromForm] EventImageUploadDto dto)
-        {
-            await _eventService.UploadEventImageAsync(dto);
-            return Ok(_responseMapper.MapToOkResponse("Image uploaded successfully"));
-        }
+        // [HttpPost("upload-image")]
+        // [Consumes("multipart/form-data")]
+        // public async Task<IActionResult> UploadEventImage([FromForm] EventImageUploadDto dto)
+        // {
+        //     await _eventService.UploadEventImageAsync(dto);
+        //     return Ok(_responseMapper.MapToOkResponse("Image uploaded successfully"));
+        // }
 
         [Authorize(Roles = "Admin")]
         [HttpPut("{id}")]

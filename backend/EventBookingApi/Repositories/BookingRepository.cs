@@ -117,6 +117,8 @@ namespace EventBookingApi.Repositories
                     EventId = e.Id,
                     EventName = e.Name,
                     EventDate = e.DateTime,
+                    TotalSeats = e.TotalSeats,
+                    AvailableSeats = e.AvailableSeats,
                     TotalBookings = e.Bookings.Count(b => !b.IsDeleted),
                     TotalSeatsBooked = e.Bookings
                                         .Where(b => !b.IsDeleted)

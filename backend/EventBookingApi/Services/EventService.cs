@@ -27,9 +27,28 @@ namespace EventBookingApi.Services
             _env = env;
         }
 
-        public async Task<EventResponseDto> AddEventAsync(EventCreateRequestDto dto)
+        // public async Task<EventResponseDto> AddEventAsync(EventCreateRequestDto dto)
+        // {
+        //     return await _transactionalService.ExecuteInTransactionAsync(async () =>
+        //     {
+        //         var location = await _locationService.AddIfNotExistsAsync(dto.Location);
+
+        //         var ev = _mapper.Map<Event>(dto);
+        //         ev.Id = Guid.NewGuid();
+        //         ev.LocationId = location.Id;
+        //         ev.AvailableSeats = ev.TotalSeats;
+        //         ev.CreatedAt = DateTime.UtcNow;
+        //         ev.UpdatedAt = DateTime.UtcNow;
+        //         ev.IsDeleted = false;
+
+        //         var created = await _eventRepository.Add(ev);
+        //         return _mapper.Map<EventResponseDto>(created);
+        //     });
+        // }
+
+        public async Task<EventResponseDto> AddEventWithImageAsync(EventCreateRequestDto dto, IFormFile? imageFile)
         {
-            return await _transactionalService.ExecuteInTransactionAsync(async () =>
+            var createdEvent = await _transactionalService.ExecuteInTransactionAsync(async () =>
             {
                 var location = await _locationService.AddIfNotExistsAsync(dto.Location);
 
@@ -41,10 +60,18 @@ namespace EventBookingApi.Services
                 ev.UpdatedAt = DateTime.UtcNow;
                 ev.IsDeleted = false;
 
-                var created = await _eventRepository.Add(ev);
-                return _mapper.Map<EventResponseDto>(created);
+                var saved = await _eventRepository.Add(ev);
+                return saved;
             });
+
+            if (imageFile != null)
+            {
+                await UploadEventImageAsync(createdEvent.Id, imageFile);
+            }
+
+            return _mapper.Map<EventResponseDto>(createdEvent);
         }
+
 
         public async Task<EventResponseDto> GetEventByIdAsync(Guid id)
         {
@@ -70,20 +97,41 @@ namespace EventBookingApi.Services
             return events.Select(_mapper.Map<EventResponseDto>);
         }
 
-        public async Task UploadEventImageAsync(EventImageUploadDto dto)
+        // public async Task UploadEventImageAsync(EventImageUploadDto dto)
+        // {
+        //     var eventEntity = await _eventRepository.Get(dto.EventId);
+
+        //     var uploadsPath = Path.Combine(_env.WebRootPath, "images", "events");
+        //     if (!Directory.Exists(uploadsPath))
+        //         Directory.CreateDirectory(uploadsPath);
+
+        //     var fileName = $"{Guid.NewGuid()}{Path.GetExtension(dto.File.FileName)}";
+        //     var filePath = Path.Combine(uploadsPath, fileName);
+
+        //     using (var stream = new FileStream(filePath, FileMode.Create))
+        //     {
+        //         await dto.File.CopyToAsync(stream);
+        //     }
+
+        //     eventEntity.ImageUrl = $"/images/events/{fileName}";
+        //     eventEntity.UpdatedAt = DateTime.UtcNow;
+
+        //     await _eventRepository.Update(eventEntity.Id, eventEntity);
+        // }
+        private async Task UploadEventImageAsync(Guid eventId, IFormFile imageFile)
         {
-            var eventEntity = await _eventRepository.Get(dto.EventId);
+            var eventEntity = await _eventRepository.Get(eventId);
 
             var uploadsPath = Path.Combine(_env.WebRootPath, "images", "events");
             if (!Directory.Exists(uploadsPath))
                 Directory.CreateDirectory(uploadsPath);
 
-            var fileName = $"{Guid.NewGuid()}{Path.GetExtension(dto.File.FileName)}";
+            var fileName = $"{Guid.NewGuid()}{Path.GetExtension(imageFile.FileName)}";
             var filePath = Path.Combine(uploadsPath, fileName);
 
             using (var stream = new FileStream(filePath, FileMode.Create))
             {
-                await dto.File.CopyToAsync(stream);
+                await imageFile.CopyToAsync(stream);
             }
 
             eventEntity.ImageUrl = $"/images/events/{fileName}";
@@ -98,7 +146,7 @@ namespace EventBookingApi.Services
 
             ev.Name = dto.Name;
             ev.Description = dto.Description;
-            ev.DateTime = dto.DateTime;
+            ev.DateTime = DateTime.SpecifyKind(dto.DateTime, DateTimeKind.Utc);
             ev.TotalSeats = dto.TotalSeats;
             ev.Price = dto.Price;
             ev.UpdatedAt = DateTime.UtcNow;

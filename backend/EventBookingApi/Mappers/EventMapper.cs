@@ -10,12 +10,14 @@ namespace EventBookingApi.Mappers
         {
             CreateMap<EventCreateRequestDto, Event>()
                 .ForMember(dest => dest.Id, opt => opt.Ignore())
+                .ForMember(dest => dest.DateTime, opt => opt.MapFrom(src => DateTime.SpecifyKind(src.DateTime, DateTimeKind.Utc))) // ✅ correct
                 .ForMember(dest => dest.LocationId, opt => opt.Ignore())
                 .ForMember(dest => dest.AvailableSeats, opt => opt.Ignore())
                 .ForMember(dest => dest.Location, opt => opt.Ignore())
                 .ForMember(dest => dest.CreatedAt, opt => opt.Ignore())
                 .ForMember(dest => dest.UpdatedAt, opt => opt.Ignore())
                 .ForMember(dest => dest.IsDeleted, opt => opt.Ignore());
+
 
 
             CreateMap<Event, EventResponseDto>()
