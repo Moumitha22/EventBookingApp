@@ -1,0 +1,8 @@
+.dashboard-card {
+  transition: transform 0.3s ease;
+  border-radius: 1rem;
+}
+
+.dashboard-card:hover {
+  transform: translateY(-5px);
+}

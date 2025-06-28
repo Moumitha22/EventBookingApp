@@ -7,6 +7,9 @@ import { AuthInterceptor } from './core/interceptors/auth.interceptor';
 import { RoleGuard } from './core/guards/role-guard';
 import { AuthService } from './core/services/auth.service';
 import { EventService } from './core/services/event.service';
+import { BookingService } from './core/services/booking.service';
+import { CategoryService } from './core/services/category.service';
+import { AdminService } from './core/services/admin.service';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -21,6 +24,9 @@ export const appConfig: ApplicationConfig = {
     },
     AuthService,
     EventService,
+    BookingService,
+    CategoryService,
+    AdminService,
     RoleGuard
   ]
 };

@@ -8,10 +8,12 @@ import { MyBookingsComponent } from './pages/my-bookings/my-bookings';
 import { BookingsSummary } from './pages/bookings-summary/bookings-summary';
 import { EditEventComponent } from './pages/edit-event/edit-event';
 import { BookEventComponent } from './pages/book-event/book-event';
+import { DashboardComponent } from './pages/dashboard/dashboard';
 
 export const routes: Routes = [
   { path: '', component: Landing, pathMatch: 'full' },  
   { path: 'landing', component: Landing },
+  { path: 'dashboard', component: DashboardComponent},
   { path: 'login', component: LoginComponent },
   { path: 'signup', component: SignupComponent },
   { path: 'events', component: EventsComponent },

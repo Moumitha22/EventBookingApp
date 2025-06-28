@@ -20,23 +20,25 @@
           <th>Total Seats</th>
           <th>Booked Seats</th>
           <th>Available</th>
+          <th>Status</th>
         </tr>
       </thead>
       <tbody>
         <tr *ngFor="let summary of summaries; index as i">
           <td class="text-center fw-semibold">{{ i + 1 }}</td>
-          <td class="fw-medium">{{ summary.eventName }}</td>
-          <td>{{ summary.eventDate | date: 'mediumDate' }}</td>
+          <td class="text-center fw-medium">{{ summary.eventName }}</td>
+          <td class="text-center">{{ summary.eventDate | date: 'mediumDate' }}</td>
           <td class="text-center">{{ summary.totalBookings }}</td>
           <td class="text-center">{{ summary.totalSeats }}</td>
           <td class="text-center text-success">{{ summary.totalSeatsBooked }}</td>
           <td class="text-center" 
-              [ngClass]="{
-                'text-success': summary.availableSeats > 0,
-                'text-danger': summary.availableSeats === 0
-              }">
-            {{ summary.availableSeats }}
-          </td>
+          [ngClass]="{
+            'text-success': summary.availableSeats > 0,
+            'text-danger': summary.availableSeats === 0
+          }">
+          {{ summary.availableSeats }}
+        </td>
+        <td class="text-center text-success">{{ summary.status }}</td>
         </tr>
       </tbody>
     </table>

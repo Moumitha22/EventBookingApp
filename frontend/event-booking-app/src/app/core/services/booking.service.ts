@@ -4,15 +4,14 @@ import { Observable } from 'rxjs';
 import { BookingResponse } from '../../models/booking-response.model';
 import { EventBookingSummary } from '../../models/event-booking-summary';
 import { environment } from '../../environments/environment';
-@Injectable({
-  providedIn: 'root'
-})
+
+@Injectable()
 export class BookingService {
   private baseUrl = `${environment.apiBaseUrl}/api/Booking`;
 
   constructor(private http: HttpClient) {}
 
-  // Book an event
+
   bookEvent(eventId: string, seatCount: number): Observable<BookingResponse> {
     const params = new HttpParams()
       .set('eventId', eventId)

@@ -36,20 +36,26 @@ export class LoginComponent {
   }
 
   onSubmit(): void {
-    if (this.loginForm.invalid) return;
+  if (this.loginForm.invalid) return;
 
-    this.loading = true;
-    const payload: LoginRequest = this.loginForm.value;
+  this.loading = true;
+  const payload: LoginRequest = this.loginForm.value;
 
-    this.authService.login(payload).subscribe({
-      next: () => {
-        const returnUrl = this.route.snapshot.queryParamMap.get('returnUrl');
-        this.router.navigateByUrl(returnUrl || '/');
-      },
-      error: err => {
-        this.errorMessage = err.error?.message || 'Login failed';
-        this.loading = false;
-      }
-    });
-  }
+  this.authService.login(payload).subscribe({
+    next: () => {
+      this.authService.userRole$.subscribe(role => {
+        if (role === 'Admin') {
+          this.router.navigate(['/dashboard']);
+        } else {
+          this.router.navigate(['/']);
+        }
+      });
+    },
+    error: err => {
+      this.errorMessage = err.error?.message || 'Login failed';
+      this.loading = false;
+    }
+  });
+}
+
 }

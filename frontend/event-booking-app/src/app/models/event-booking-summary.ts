@@ -6,4 +6,5 @@ export interface EventBookingSummary {
   totalSeats: number;
   availableSeats: number;
   totalSeatsBooked: number;
+  status: number;
 }

@@ -87,6 +87,7 @@ builder.Services.AddTransient<ILocationService, LocationService>();
 builder.Services.AddTransient<IEventService, EventService>();
 builder.Services.AddTransient<ITransactionalService, TransactionalService>();
 builder.Services.AddTransient<IBookingService, BookingService>();
+builder.Services.AddTransient<IAdminService, AdminService>();
 #endregion
 
 builder.Services.AddAutoMapper(typeof(UserMapper).Assembly);

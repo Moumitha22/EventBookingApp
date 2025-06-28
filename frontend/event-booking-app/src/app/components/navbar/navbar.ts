@@ -11,27 +11,57 @@ import { RouterLink } from '@angular/router';
   templateUrl: './navbar.html',
   styleUrl: './navbar.css',
 })
+// export class Navbar implements OnInit {
+//   private router = inject(Router);
+//   private authService = inject(AuthService);
+
+//   isLoggedIn$ = this.authService.isLoggedIn$;
+//   userRole$ = this.authService.userRole$;
+
+//   isLandingPage = true;
+//   isScrolled = false;
+//   showNavbar = true;
+
+//   ngOnInit(): void {
+//     this.router.events.pipe(
+//       filter(event => event instanceof NavigationEnd)
+//     ).subscribe(() => {
+//       const url = this.router.url;
+
+//       // Control navbar visibility
+//       // this.showNavbar = !['/login', '/signup'].includes(url);
+
+//       // Detect landing page
+//       this.isLandingPage = url === '/' || url.startsWith('/landing') || url.startsWith('/login') || url.startsWith('/signup');
+//       this.checkNavbarState();
+//     });
+
+//     this.checkNavbarState();
+//   }
+
 export class Navbar implements OnInit {
   private router = inject(Router);
   private authService = inject(AuthService);
 
   isLoggedIn$ = this.authService.isLoggedIn$;
-  userRole$ = this.authService.userRole$;
+
+  role: 'Admin' | 'User' | null = null;
 
   isLandingPage = true;
   isScrolled = false;
   showNavbar = true;
 
   ngOnInit(): void {
+    // Subscribe to user role once
+    this.authService.userRole$.subscribe(role => {
+      this.role = role as 'Admin' | 'User' | null;
+    });
+
+    // Navigation listener
     this.router.events.pipe(
       filter(event => event instanceof NavigationEnd)
     ).subscribe(() => {
       const url = this.router.url;
-
-      // Control navbar visibility
-      // this.showNavbar = !['/login', '/signup'].includes(url);
-
-      // Detect landing page
       this.isLandingPage = url === '/' || url.startsWith('/landing') || url.startsWith('/login') || url.startsWith('/signup');
       this.checkNavbarState();
     });

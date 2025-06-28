@@ -62,7 +62,19 @@ namespace EventBookingApi.Services
 
         public async Task<IEnumerable<EventBookingSummaryDto>> GetAllEventBookingSummariesAsync()
         {
-            return await _bookingRepository.GetEventBookingSummariesAsync();
+            var summaries = await _bookingRepository.GetEventBookingSummariesAsync();
+
+            foreach (var e in summaries)
+            {
+                if (e.AvailableSeats == 0)
+                    e.Status = "Sold Out";
+                else if (e.EventDate < DateTime.UtcNow)
+                    e.Status = "Expired";
+                else
+                    e.Status = "Active";
+            }
+
+            return summaries;
         }
 
     }
