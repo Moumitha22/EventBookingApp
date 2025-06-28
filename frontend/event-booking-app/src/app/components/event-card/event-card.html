@@ -1,4 +1,4 @@
-<div class="card h-100 shadow border-0 event-card">
+<!-- <div class="card h-100 shadow border-0 event-card">
   <img
     *ngIf="event.imageUrl"
     [src]="imageBaseUrl + event.imageUrl"
@@ -39,7 +39,6 @@
     </p>
 
     <div class="mt-auto d-flex justify-content-center gap-5">
-      <!-- Admin Buttons -->
       <ng-container *ngIf="role === 'Admin'">
         <a class="btn btn-outline-primary" [routerLink]="['/edit-event', event.id]">
           <i class="bi bi-pencil-fill me-1"></i> View / Edit
@@ -50,7 +49,6 @@
         </button>
       </ng-container>
 
-      <!-- User Book Button -->
       <button
         *ngIf="role === 'User' || role === null"
         class="btn btn-primary w-100"
@@ -63,5 +61,79 @@
 
 
 
+  </div>
+</div> -->
+<div
+  class="card h-100 shadow border-0 event-card"
+  (click)="goToDetails($event)"
+>
+  <img
+    *ngIf="event.imageUrl"
+    [src]="imageBaseUrl + event.imageUrl"
+    class="card-img-top"
+    alt="{{ event.name }}"
+  />
+
+  <div class="card-body d-flex flex-column">
+    <h5 class="card-title">{{ event.name }}</h5>
+
+    <p class="card-text text-muted mb-3">
+      <i class="bi bi-calendar-event me-1"></i> {{ event.dateTime | date: 'medium' }}
+    </p>
+
+    <p class="card-text medium mb-2">
+      <i class="bi bi-geo-alt-fill me-2 feature-icon"></i>
+      <strong>Location:</strong> {{ event.locationName }}
+    </p>
+
+    <p class="card-text medium mb-2">
+      <i class="bi bi-tags-fill me-2 feature-icon"></i>
+      <strong>Category:</strong> {{ event.categoryName }}
+    </p>
+
+    <p class="card-text medium mb-2">
+      <i class="bi bi-currency-rupee me-2 feature-icon"></i>
+      <strong>Price:</strong>
+      <span *ngIf="event.isFree" class="text-success">Free</span>
+      <span *ngIf="!event.isFree"> &#8377;{{ event.price }}</span>
+    </p>
+
+    <p class="card-text small mb-3">
+      <i class="bi bi-person-check-fill me-2 feature-icon"></i>
+      <strong>Available Seats:</strong>
+      <span [ngClass]="{ 'text-danger': event.availableSeats === 0, 'text-success': event.availableSeats > 0 }">
+        {{ event.availableSeats }}
+      </span>
+    </p>
+
+    <div class="mt-auto d-flex justify-content-center gap-5">
+      <ng-container *ngIf="role === 'Admin'">
+        <a
+          class="btn btn-outline-primary"
+          [routerLink]="['/edit-event', event.id]"
+          (click)="$event.stopPropagation()"
+        >
+          <i class="bi bi-pencil-fill me-1"></i> View / Edit
+        </a>
+
+        <button
+          class="btn btn-danger"
+          (click)="deleteEvent()"
+        >
+          <i class="bi bi-trash-fill me-1"></i> Delete
+        </button>
+      </ng-container>
+
+      <!-- User Book Button -->
+      <button
+        *ngIf="role === 'User' || role === null"
+        class="btn btn-primary w-100"
+        [routerLink]="['/book-event', event.id]"
+        [disabled]="event.availableSeats === 0"
+        (click)="$event.stopPropagation()"
+      >
+        <i class="bi bi-ticket-fill me-1"></i> Book Tickets
+      </button>
+    </div>
   </div>
 </div>

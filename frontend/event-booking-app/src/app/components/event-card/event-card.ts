@@ -1,8 +1,8 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, EventEmitter, inject, Input, Output } from '@angular/core';
 import { environment } from '../../environments/environment';
 import { EventModel } from '../../models/event.model';
 import { CommonModule } from '@angular/common';
-import { RouterLink } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-event-card',
@@ -15,8 +15,13 @@ export class EventCardComponent {
   @Input() role: 'Admin' | 'User' | null = null;
 
   @Output() delete = new EventEmitter<string>();
+  private router = inject(Router);
 
   imageBaseUrl = environment.apiBaseUrl;
+
+  goToDetails(event: MouseEvent) {
+    this.router.navigate(['/event-details', this.event.id]);
+  }
 
   deleteEvent(): void {
     if (confirm('Are you sure you want to delete this event?')) {

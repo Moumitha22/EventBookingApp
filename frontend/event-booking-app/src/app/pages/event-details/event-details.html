@@ -1,1 +1,120 @@
-<p>event-details works!</p>
+<div class="container my-4" *ngIf="event">
+  <div class="card border-0 shadow p-4 rounded bg-white">
+    <div class="d-flex justify-content-between align-items-center">
+        <h4 class="text-dark fw-bold mb-0">{{ event.name }}</h4>
+
+        <button
+            *ngIf="canEditProperty()"
+            class="btn btn-sm btn-outline-primary"
+            (click)="goToEdit()"
+        >
+            <i class="fa fa-edit me-1"></i> Edit
+        </button>
+    </div>
+
+
+    <div class="d-flex align-items-center mb-2 text-secondary">
+      <i class="fa-solid fa-location-dot me-2"></i>
+      {{ event.locationName }}
+    </div>
+
+    <div class="row g-4 align-items-stretch h-100">
+      <!-- Image -->
+      <div class="col-md-6 d-flex">
+        <div class="position-relative w-100 h-200 rounded overflow-hidden carousel-container">
+          <img
+            class="carousel-image"
+            [src]="image"
+            [alt]="event.name"
+          />
+        </div>
+      </div>
+
+      <!-- Key Details -->
+      <div class="col-md-6 d-flex flex-column justify-content-between">
+        <div class="border rounded p-3 h-100 feature-box">
+          <h5 class="fw-semibold mb-3 text-secondary"> Details</h5>
+          <div class="row g-2 mb-3">
+            <!-- Category -->
+            <div class="col-6">
+              <div class="feature-item">
+                <i class="fa-solid fa-tags text-primary"></i>
+                <div>
+                  <small class="text-muted">Category</small><br />
+                  <strong>{{ event.categoryName }}</strong>
+                </div>
+              </div>
+            </div>
+
+            <!-- Price / Free -->
+            <div class="col-6">
+              <div class="feature-item">
+                <i class="fa-solid fa-money-bill text-primary"></i>
+                <div>
+                  <small class="text-muted">Price</small><br />
+                  <strong>
+                    <span *ngIf="event.isFree" class="text-success">Free</span>
+                    <span *ngIf="!event.isFree">₹{{ event.price }}</span>
+                  </strong>
+                </div>
+              </div>
+            </div>
+
+            <!-- Total Seats -->
+            <div class="col-6">
+              <div class="feature-item">
+                <i class="fa-solid fa-users text-primary"></i>
+                <div>
+                  <small class="text-muted">Total Seats</small><br />
+                  <strong>{{ event.totalSeats }}</strong>
+                </div>
+              </div>
+            </div>
+
+            <!-- Available Seats -->
+            <div class="col-6">
+              <div class="feature-item">
+                <i class="fa-solid fa-user-check text-primary"></i>
+                <div>
+                  <small class="text-muted">Available</small><br />
+                  <strong [ngClass]="{ 'text-danger': event.availableSeats === 0 }">
+                    {{ event.availableSeats }}
+                  </strong>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="text-center mt-auto">
+            <ng-container *ngIf="canEditProperty(); else userBooking">
+                <button class="contact-btn" (click)="goToBookings()">
+                <i class="fa fa-users me-1"></i> View Bookings
+                </button>
+            </ng-container>
+
+            <ng-template #userBooking>
+                <button
+                class="contact-btn"
+                (click)="handleBookTickets()"
+                [disabled]="event.availableSeats === 0"
+                >
+                Book Tickets
+                </button>
+            </ng-template>
+        </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Description -->
+  <div class="container my-4">
+    <div class="card border-0 shadow p-4 rounded bg-white">
+      <div class="description-card p-4 rounded shadow-sm">
+        <h5 class="section-heading mb-3">Description</h5>
+        <p>{{ event.description }}</p>
+      </div>
+    </div>
+  </div>
+</div>

@@ -2,51 +2,52 @@
   <h2 class="text-center fw-bold mb-5">Admin Dashboard</h2>
 
   <div class="row g-4">
-    <!-- Total Users -->
-    <div class="col-md-4">
-      <div class="card shadow-sm border-0 p-3 text-center dashboard-card bg-light">
-        <i class="bi bi-people-fill text-primary fs-1 mb-2"></i>
-        <h5>Total Users</h5>
-        <h3 class="fw-bold">{{ dashboard?.totalUsers }}</h3>
-      </div>
-    </div>
 
-    <!-- Total Events -->
-    <div class="col-md-4">
-      <div class="card shadow-sm border-0 p-3 text-center dashboard-card bg-light">
-        <i class="bi bi-calendar-event-fill text-success fs-1 mb-2"></i>
-        <h5>Total Events</h5>
-        <h3 class="fw-bold">{{ dashboard?.totalEvents }}</h3>
-      </div>
-    </div>
-
-    <!-- Total Bookings -->
-    <div class="col-md-4">
-      <div class="card shadow-sm border-0 p-3 text-center dashboard-card bg-light">
-        <i class="bi bi-ticket-perforated-fill text-danger fs-1 mb-2"></i>
-        <h5>Total Bookings</h5>
-        <h3 class="fw-bold">{{ dashboard?.totalBookings }}</h3>
-      </div>
-    </div>
-
-    <!-- Upcoming Events -->
-    <div class="col-md-6">
-      <div class="card shadow-sm border-0 p-3 text-center dashboard-card bg-light">
-        <i class="bi bi-clock-history text-warning fs-1 mb-2"></i>
-        <h5>Upcoming Events</h5>
-        <h3 class="fw-bold">{{ dashboard?.upcomingEventsCount }}</h3>
-      </div>
-    </div>
-
-    <!-- Sold Out Events -->
-    <div class="col-md-6">
-      <div class="card shadow-sm border-0 p-3 text-center dashboard-card bg-light">
-        <i class="bi bi-exclamation-triangle-fill text-secondary fs-1 mb-2"></i>
-        <h5>Sold Out Events</h5>
-        <h3 class="fw-bold">{{ dashboard?.soldOutEventsCount }}</h3>
-      </div>
+  <!-- Total Users -->
+  <div class="col-md-4">
+    <div class="card dashboard-card card-users text-center">
+      <i class="bi bi-people-fill fs-1 mb-2"></i>
+      <h5>Total Users</h5>
+      <h3>{{ dashboard?.totalUsers }}</h3>
     </div>
   </div>
+
+  <!-- Total Events -->
+  <div class="col-md-4">
+    <div class="card dashboard-card card-events text-center">
+      <i class="bi bi-calendar-event-fill fs-1 mb-2"></i>
+      <h5>Total Events</h5>
+      <h3>{{ dashboard?.totalEvents }}</h3>
+    </div>
+  </div>
+
+  <!-- Total Bookings -->
+  <div class="col-md-4">
+    <div class="card dashboard-card card-bookings text-center">
+      <i class="bi bi-ticket-perforated-fill fs-1 mb-2"></i>
+      <h5>Total Bookings</h5>
+      <h3>{{ dashboard?.totalBookings }}</h3>
+    </div>
+  </div>
+
+  <!-- Upcoming Events -->
+  <div class="col-md-6">
+    <div class="card dashboard-card card-upcoming text-center">
+      <i class="bi bi-clock-history fs-1 mb-2"></i>
+      <h5>Upcoming Events</h5>
+      <h3>{{ dashboard?.upcomingEventsCount }}</h3>
+    </div>
+  </div>
+
+  <!-- Sold Out Events -->
+  <div class="col-md-6">
+    <div class="card dashboard-card card-soldout text-center">
+      <i class="bi bi-exclamation-triangle-fill fs-1 mb-2"></i>
+      <h5>Sold Out Events</h5>
+      <h3>{{ dashboard?.soldOutEventsCount }}</h3>
+    </div>
+  </div>
+
 
   <app-bookings-summary></app-bookings-summary>
 </div>

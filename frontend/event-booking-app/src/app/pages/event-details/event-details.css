@@ -1,0 +1,75 @@
+.carousel-container {
+  height: 100%;
+  position: relative;
+  border-radius: 8px;
+}
+
+.carousel-image {
+  width: 100%;
+  max-height: 360px;
+  object-fit: cover;
+  border-radius: 8px;
+  display: block;
+}
+
+.carousel-nav {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background: transparent;
+  border: none;
+  color: white;
+  font-size: 1.6rem;
+  z-index: 2;
+  padding: 0 12px;
+  cursor: pointer;
+}
+
+.feature-box {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.feature-item {
+  background-color: #f8f9fa;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  padding: 10px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.contact-btn {
+  width: 100%;
+  padding: 14px 20px;
+  font-size: 1.1rem;
+  font-weight: 600;
+  border-radius: 10px;
+  background-color: #5e23dc;
+  color: white;
+  border: none;
+  transition: background-color 0.3s ease;
+}
+
+.contact-btn:hover {
+  background-color: #3e1bb0;
+}
+
+.section-heading {
+  border-bottom: 3px solid #5e23dc;;
+  display: inline-block;
+  padding-bottom: 4px;
+  color: #5e23dc;
+}
+
+.description-card {
+  background-color: #faf9fd;
+  border: 1px solid #e0d6f0;
+  border-radius: 10px;
+  color: #333;
+  font-size: 15px;
+  line-height: 1.6;
+  min-height: 180px;
+}

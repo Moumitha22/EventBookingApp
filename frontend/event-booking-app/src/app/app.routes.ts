@@ -9,21 +9,54 @@ import { BookingsSummary } from './pages/bookings-summary/bookings-summary';
 import { EditEventComponent } from './pages/edit-event/edit-event';
 import { BookEventComponent } from './pages/book-event/book-event';
 import { DashboardComponent } from './pages/dashboard/dashboard';
+import { EventDetailsComponent } from './pages/event-details/event-details';
+import { RoleGuard } from './core/guards/role-guard';
 
 export const routes: Routes = [
-  { path: '', component: Landing, pathMatch: 'full' },  
+  { path: '', component: Landing, pathMatch: 'full' },
   { path: 'landing', component: Landing },
-  { path: 'dashboard', component: DashboardComponent},
   { path: 'login', component: LoginComponent },
   { path: 'signup', component: SignupComponent },
   { path: 'events', component: EventsComponent },
-  { path: 'my-events', component: MyBookingsComponent },
-  { path: 'bookings-summary', component: BookingsSummary },
-  { path: 'post-event', component: PostEventComponent},
-  { path: 'book-event/:id', component: BookEventComponent},
+  {
+    path: 'dashboard',
+    component: DashboardComponent,
+    canActivate: [RoleGuard],
+    data: { expectedRoles: ['Admin'] }
+  },
+  {
+    path: 'post-event',
+    component: PostEventComponent,
+    canActivate: [RoleGuard],
+    data: { expectedRoles: ['Admin'] }
+  },
   {
     path: 'edit-event/:id',
-    component: EditEventComponent
-  }
+    component: EditEventComponent,
+    canActivate: [RoleGuard],
+    data: { expectedRoles: ['Admin'] }
+  },
+  {
+    path: 'bookings-summary',
+    component: BookingsSummary,
+    canActivate: [RoleGuard],
+    data: { expectedRoles: ['Admin'] }
+  },
+  {
+    path: 'my-events',
+    component: MyBookingsComponent,
+    canActivate: [RoleGuard],
+    data: { expectedRoles: ['User'] }
+  },
+  {
+    path: 'book-event/:id',
+    component: BookEventComponent,
+    canActivate: [RoleGuard],
+    data: { expectedRoles: ['User'] }
+  },
 
+  {
+    path: 'event-details/:id',
+    component: EventDetailsComponent 
+  }
 ];
