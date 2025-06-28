@@ -1,0 +1,44 @@
+<div class="container mt-4">
+  <h4 class="text-center mb-4">Event Booking Summary</h4>
+
+  <div *ngIf="loading" class="text-center my-5">
+    <div class="spinner-border text-primary" role="status"></div>
+  </div>
+
+  <div *ngIf="!loading && summaries.length === 0" class="text-muted text-center">
+    No bookings available.
+  </div>
+
+  <div *ngIf="!loading && summaries.length > 0" class="table-responsive">
+    <table class="table table-bordered table-hover shadow-sm">
+      <thead class="table-light text-center">
+        <tr>
+          <th>#</th>
+          <th>Event Name</th>
+          <th>Date</th>
+          <th>Total Bookings</th>
+          <th>Total Seats</th>
+          <th>Booked Seats</th>
+          <th>Available</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let summary of summaries; index as i">
+          <td class="text-center fw-semibold">{{ i + 1 }}</td>
+          <td class="fw-medium">{{ summary.eventName }}</td>
+          <td>{{ summary.eventDate | date: 'mediumDate' }}</td>
+          <td class="text-center">{{ summary.totalBookings }}</td>
+          <td class="text-center">{{ summary.totalSeats }}</td>
+          <td class="text-center text-success">{{ summary.totalSeatsBooked }}</td>
+          <td class="text-center" 
+              [ngClass]="{
+                'text-success': summary.availableSeats > 0,
+                'text-danger': summary.availableSeats === 0
+              }">
+            {{ summary.availableSeats }}
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

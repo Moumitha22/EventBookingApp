@@ -1,0 +1,37 @@
+<div class="container mt-4">
+  <h4 class="text-center mb-4">My Bookings</h4>
+
+  <div *ngIf="loading" class="text-center my-5">
+    <div class="spinner-border text-primary" role="status"></div>
+  </div>
+
+  <div *ngIf="!loading && bookings.length === 0" class="text-muted text-center">
+    You haven’t booked any events yet.
+  </div>
+
+  <div *ngIf="!loading && bookings.length > 0" class="d-flex flex-column align-items-center">
+    <div *ngFor="let booking of bookings" class="card booking-card mb-4 w-100">
+      <div class="card-body">
+        <h5 class="card-title">{{ booking.eventName }}</h5>
+        <h6 class="text-muted mb-3">
+          <i class="bi bi-calendar-event me-1"></i>
+          {{ booking.eventDate | date: 'medium' }}
+        </h6>
+
+        <!-- Responsive row for booking details -->
+        <div class="row mb-2">
+          <div class="col-12 col-md-4 mb-2 mb-md-0">
+            <p class="mb-1"><strong>Seats Booked:</strong> {{ booking.seatCount }}</p>
+          </div>
+          <div class="col-12 col-md-4 mb-2 mb-md-0">
+            <p class="mb-1"><strong>Total Price:</strong> ₹{{ booking.price }}</p>
+          </div>
+          <div class="col-12 col-md-4">
+            <p class="mb-1"><strong>Booked On:</strong> {{ booking.bookedAt | date: 'short' }}</p>
+          </div>
+        </div>
+        
+      </div>
+    </div>
+  </div>
+</div>

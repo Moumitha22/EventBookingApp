@@ -1,0 +1,13 @@
+table th {
+  background-color: #f4f6ff;
+  color: #5e23dc;
+}
+
+table td {
+  vertical-align: middle;
+}
+
+.table-hover tbody tr:hover {
+  background-color: #f9f9fc;
+  transition: background-color 0.2s ease;
+}

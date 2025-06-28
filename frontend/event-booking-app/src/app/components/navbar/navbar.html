@@ -1,0 +1,86 @@
+<nav *ngIf="showNavbar" id="mainNavbar"[ngClass]="navbarClasses">
+  <div class="container">
+    <a class="navbar-brand d-flex align-items-center" routerLink="/">
+      <i class="fa-solid fa-masks-theater me-2"></i>
+      <span class="fw-bold text-white">EVENTSY</span>
+    </a>
+
+    <button
+      class="navbar-toggler"
+      type="button"
+      data-bs-toggle="collapse"
+      data-bs-target="#navbarContent"
+      aria-controls="navbarContent"
+      aria-expanded="false"
+      aria-label="Toggle navigation"
+    >
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse justify-content-end" id="navbarContent">
+      <ul class="navbar-nav mb-2 mb-lg-0 align-items-lg-center">
+        <li class="nav-item me-lg-4 mb-3 mb-lg-0">
+          <a class="nav-link text-white" routerLink="/">Home</a>
+        </li>
+        <li class="nav-item me-lg-4 mb-3 mb-lg-0">
+          <a class="nav-link text-white" routerLink="/events">Events</a>
+        </li>
+
+        <!-- Role-specific nav links -->
+        <ng-container *ngIf="userRole$ | async as role">
+          <ng-container *ngIf="role === 'Admin'">
+            <li class="nav-item me-lg-4 mb-3 mb-lg-0">
+              <a class="nav-link text-white" routerLink="post-event">Post Events</a>
+            </li>
+          </ng-container>
+          <ng-container *ngIf="role === 'Admin'">
+            <li class="nav-item me-lg-4 mb-3 mb-lg-0">
+              <a class="nav-link text-white" routerLink="/bookings-summary">Bookings Summary</a>
+            </li>
+          </ng-container>
+        </ng-container>
+
+        <!-- Authenticated dropdown -->
+        <ng-container *ngIf="isLoggedIn$ | async; else loginButton">
+          <li class="nav-item dropdown me-lg-4 mb-3 mb-lg-0">
+            <button
+              class="dropdown-toggle d-flex align-items-center text-white border-0 bg-transparent p-0"
+              id="profileDropdown"
+              data-bs-toggle="dropdown"
+              aria-expanded="false"
+            >
+              <i class="bi bi-person-fill fs-4 me-1"></i>
+              <i class="bi bi-caret-down-fill fs-6 mt-2"></i>
+            </button>
+
+            <ul
+              class="dropdown-menu dropdown-menu-end mt-3 mb-2"
+              aria-labelledby="profileDropdown"
+            >
+            <ng-container *ngIf="userRole$ | async as role">
+              <ng-container *ngIf="role === 'Admin'">
+              <li><a class="dropdown-item" routerLink="/dashboard">Dashboard</a></li>
+              </ng-container>
+              <ng-container *ngIf="role === 'User'">
+                <li><a class="dropdown-item" routerLink="/my-events">My Bookings</a></li>
+              </ng-container>
+              <li><hr class="dropdown-divider" /></li>
+              <li>
+                <span class="dropdown-item text-danger" role="button" (click)="logout()">Logout</span>
+              </li>
+              </ng-container>
+            </ul>
+          </li>
+        </ng-container>
+
+        <!-- Login button -->
+        <ng-template #loginButton>
+          <li class="nav-item">
+            <a class="btn btn-login" routerLink="/login">Login</a>
+          </li>
+        </ng-template>
+      </ul>
+    </div>
+  </div>
+</nav>
+

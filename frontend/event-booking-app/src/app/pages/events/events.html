@@ -1,0 +1,22 @@
+<div class="container py-4">
+  <h2 class="mb-4 text-center fw-bold">Upcoming Events</h2>
+
+  <div *ngIf="isLoading" class="text-center my-5">
+    <div class="spinner-border text-primary" role="status"></div>
+  </div>
+
+  <div *ngIf="errorMessage" class="alert alert-danger text-center">
+    {{ errorMessage }}
+  </div>
+
+  <div *ngIf="!isLoading && events.length" class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-4">
+    <div class="col" *ngFor="let event of events">
+      <app-event-card [event]="event"></app-event-card>
+    </div>
+  </div>
+
+  <div *ngIf="!isLoading && !errorMessage && events.length === 0" class="text-muted text-center mt-5">
+    <i class="bi bi-calendar-x fs-3"></i>
+    <p class="mt-2">No upcoming events found.</p>
+  </div>
+</div>

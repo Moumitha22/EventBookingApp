@@ -1,0 +1,20 @@
+.booking-card {
+  max-width: 1000px;
+  border-left: 4px solid #3e1bb0;
+  transition: transform 0.3s ease;
+  box-shadow: 0 0 8px rgba(0, 0, 0, 0.04);
+}
+
+.booking-card:hover {
+  transform: scale(1.01);
+  box-shadow: 0 0 0 2px #dbbefb;
+}
+
+.card-title {
+  color: #3e1bb0;
+}
+
+.card-body p {
+  font-size: 16px;
+  color: #444;
+}

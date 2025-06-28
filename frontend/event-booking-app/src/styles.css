@@ -1,0 +1,29 @@
+@import url('bootstrap-icons/font/bootstrap-icons.css');
+
+.btn-outline-primary {
+  color: #5e23dc ;
+  border-color: #5e23dc ;
+}
+
+.btn-outline-primary:hover {
+  background-color: #5e23dc ;
+  border-color: #5e23dc ;
+  color: #fff;
+}
+
+.btn-primary {
+  background-color: #5e23dc;
+  border-color: #5e23dc ;
+}
+
+.btn-primary:hover {
+  background-color: #3e1bb0;
+  border-color: #3e1bb0;
+}
+
+.section-heading {
+  border-bottom: 3px solid #5e23dc;
+  display: inline-block;
+  padding-bottom: 4px;
+  color: #5e23dc ;
+}

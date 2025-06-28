@@ -1,0 +1,53 @@
+<div class="main-bg d-flex justify-content-center align-items-center">
+  <div class="login-wrapper rounded d-flex shadow-lg flex-wrap">
+    <!-- Left Side -->
+    <div class="p-4 d-flex flex-column justify-content-center align-items-center w-50">
+      <div class="bg-white bg-opacity-75 w-100" style="max-width: 400px;">
+        <h3 class="text-center mb-5 text-teal">Welcome!</h3>
+        
+        <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+          <div class="mb-4 position-relative">
+            <i class="fa-solid fa-envelope input-icon fs-5"></i>
+            <input type="email"
+                   class="form-control custom-input ps-5"
+                   formControlName="email"
+                   placeholder="Enter your email" />
+            <small *ngIf="loginForm.get('email')?.invalid && loginForm.get('email')?.touched"
+                   class="text-danger">Valid email is required</small>
+          </div>
+
+          <div class="mb-5 position-relative">
+            <i class="fa-solid fa-lock input-icon fs-5"></i>
+            <input [type]="showPassword ? 'text' : 'password'"
+                   class="form-control custom-input ps-5"
+                   formControlName="password"
+                   placeholder="Enter your password" />
+            <span class="toggle-password" (click)="togglePassword()">
+              <i class="fa-solid" [ngClass]="showPassword ? 'fa-eye' : 'fa-eye-slash'"></i>
+            </span>
+            <small *ngIf="loginForm.get('password')?.invalid && loginForm.get('password')?.touched"
+                   class="text-danger">Password is required</small>
+          </div>
+
+          <button type="submit" id="login-btn"
+                  class="btn w-100 mt-3"
+                  [disabled]="loginForm.invalid || loading">Login</button>
+
+          <p *ngIf="errorMessage" class="text-danger text-center mt-3">{{ errorMessage }}</p>
+        </form>
+
+        <div class="text-center mt-4" style="font-size: 15px;">
+          Don't have an account? <a routerLink="/signup" class="text-decoration-none text-primary">Sign up</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Right Side -->
+    <div class="login-right d-none d-md-block">
+      <div class="overlay-text">
+        <h2>Find Your Dream Home</h2>
+        <p>Trusted by thousands of buyers and sellers.</p>
+      </div>
+    </div>
+  </div>
+</div>

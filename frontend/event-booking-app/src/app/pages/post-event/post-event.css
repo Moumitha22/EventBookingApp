@@ -1,0 +1,50 @@
+.container {
+  max-width: 950px;
+  margin: auto;
+}
+
+
+form {
+  border: 2px solid #d2bbfc;
+  padding: 2rem;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+  background-color: #fff;
+}
+
+h4, h5 {
+  color: #5e23dc;
+}
+
+.sub-heading{
+  /* font-size: 20px; */
+}
+
+input.form-control,
+textarea.form-control,
+select.form-select {
+  border: 1px solid #d4bbfb;
+  transition: all 0.2s ease;
+}
+
+input.form-control:focus,
+textarea.form-control:focus,
+select.form-select:focus {
+  border-color: #5e23dc;
+  box-shadow: 0 0 0 0.15rem rgba(94, 35, 220, 0.2);
+  outline: none;
+}
+
+#post-btn {
+  background-color: #5e23dc;
+  color: #fff;
+  font-weight: 600;
+  padding: 0.6rem 2rem;
+  border-radius: 6px;
+  transition: background-color 0.2s ease;
+  border: none;
+}
+
+#post-btn:hover:not(:disabled) {
+  background-color: #4a1ac4;
+}
