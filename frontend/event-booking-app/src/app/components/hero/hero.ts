@@ -23,6 +23,6 @@ export class HeroComponent {
       keyword: this.searchModel.keyword || '',
     };
 
-    this.router.navigate(['/properties'], { queryParams });
+    this.router.navigate(['/events'], { queryParams });
   }
 }
